@@ -7,30 +7,20 @@ namespace ZeDeliveryCodeChallenge
 {
     [Table("partners")]
     [Index(nameof(document), IsUnique = true)]
-    public class Partner
+    public record Partner(
+        string? id,
+        string? tradingName,
+        string? ownerName,
+        string? document,
+        MultiPolygon? coverageArea,
+        Point? address
+    )
     {
-        [Key] public string? id { get; private set; }
-        public string? tradingName { get; private set; }
-        public string? ownerName { get; private set; }
-        public string? document { get; private set; }
-        public MultiPolygon? coverageArea { get; private set; }
-        public Point? address { get; private set; }
-
-        public Partner(
-            string? id,
-            string? tradingName,
-            string? ownerName,
-            string? document,
-            MultiPolygon? coverageArea,
-            Point? address
-        )
-        {
-            this.id = id;
-            this.tradingName = tradingName;
-            this.ownerName = ownerName;
-            this.document = document;
-            this.coverageArea = coverageArea;
-            this.address = address;
-        }
+        [Key] public string? id { get; private set; } = id;
+        public string? tradingName { get; private set; } = tradingName;
+        public string? ownerName { get; private set; } = ownerName;
+        public string? document { get; private set; } = document;
+        public MultiPolygon? coverageArea { get; private set; } = coverageArea;
+        public Point? address { get; private set; } = address;
     }
 }
