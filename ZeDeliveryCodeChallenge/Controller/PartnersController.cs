@@ -11,13 +11,7 @@ namespace ZeDeliveryCodeChallenge
         [HttpGet]
         public async Task<IActionResult> GetPartners()
         {
-            try
-            {
-                var partners = await partnerRepository.GetPartners();
-                var geoJSONFeatureCollection = ConvertToGeoJSON(partners);
-
-                return Ok(partners);
-            }
+            try { return Ok(await partnerRepository.GetPartners()); }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
