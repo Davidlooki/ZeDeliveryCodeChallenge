@@ -1,10 +1,10 @@
 using NetTopologySuite;
 using NetTopologySuite.IO.Converters;
 using ZeDeliveryCodeChallenge;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 // Add services to the container.
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
@@ -17,8 +17,12 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultDbString");
+builder.Services.AddDbContext<AppDbContext>(config => config.UseNpgsql(
+    connectionString,
+    pjr => pjr.UseNetTopologySuite()));
+
 builder.Services.AddTransient<IPartnerRepository, PartnerRepository<AppDbContext>>();
-builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<AppDbContext>();
 
 var app = builder.Build();
